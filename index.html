@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tally — Split expenses without the awkward maths</title>
+<meta name="description" content="Tally: a Splitwise-style expense splitter. Track group expenses, split bills fairly, and settle up with the fewest possible payments.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">🧾</span>
+      <span class="brand__name">Tally</span>
+    </div>
+
+    <nav class="nav" aria-label="Primary">
+      <button class="nav__item is-active" data-view="dashboard">
+        <span class="nav__icon" aria-hidden="true">◧</span> Dashboard
+      </button>
+      <button class="nav__item" data-view="groups">
+        <span class="nav__icon" aria-hidden="true">◨</span> Groups
+      </button>
+      <button class="nav__item" data-view="people">
+        <span class="nav__icon" aria-hidden="true">◍</span> People
+      </button>
+      <button class="nav__item" data-view="activity">
+        <span class="nav__icon" aria-hidden="true">☰</span> Activity
+      </button>
+    </nav>
+
+    <div class="sidebar__groups">
+      <div class="sidebar__label">Your groups</div>
+      <div class="sidebar__grouplist" id="sidebarGroupList"><!-- injected --></div>
+      <button class="sidebar__addgroup" id="btnSidebarAddGroup">+ New group</button>
+    </div>
+
+    <div class="sidebar__footer">
+      <button class="iconbtn" id="btnTheme" title="Toggle theme" aria-label="Toggle dark mode">
+        <span id="themeIcon">◑</span>
+      </button>
+      <select class="currency-select" id="currencySelect" aria-label="Currency" title="Currency">
+        <option value="₹">₹ INR</option>
+        <option value="$">$ USD</option>
+        <option value="€">€ EUR</option>
+        <option value="£">£ GBP</option>
+      </select>
+      <button class="iconbtn" id="btnResetDemo" title="Load sample data" aria-label="Load sample data">↺</button>
+    </div>
+  </aside>
+
+  <!-- ============ MOBILE TOPBAR ============ -->
+  <header class="mobilebar">
+    <button class="iconbtn" id="btnMenu" aria-label="Open menu">☰</button>
+    <div class="brand brand--mobile"><span aria-hidden="true">🧾</span> Tally</div>
+    <button class="btn btn--primary btn--sm" id="btnMobileAdd">+ Add</button>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 class="topbar__title" id="pageTitle">Dashboard</h1>
+        <p class="topbar__subtitle" id="pageSubtitle">Your overall balance across every group</p>
+      </div>
+      <div class="topbar__actions">
+        <div class="search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" id="searchInput" placeholder="Search expenses…" aria-label="Search expenses">
+        </div>
+        <button class="btn btn--primary" id="btnAddExpense">+ Add expense</button>
+      </div>
+    </header>
+
+    <div class="view" id="viewRoot"><!-- injected per-view content --></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- ============ MODAL: ADD / EDIT EXPENSE ============ -->
+<div class="modal" id="modalExpense" role="dialog" aria-modal="true" aria-labelledby="modalExpenseTitle">
+  <div class="modal__card modal__card--wide">
+    <div class="modal__head">
+      <h2 id="modalExpenseTitle">Add an expense</h2>
+      <button class="iconbtn" data-close-modal aria-label="Close">✕</button>
+    </div>
+    <form id="formExpense" class="form">
+      <input type="hidden" id="expenseId">
+
+      <div class="field">
+        <label for="expenseGroup">Group</label>
+        <select id="expenseGroup" required></select>
+      </div>
+
+      <div class="field field--grow">
+        <label for="expenseDesc">Description</label>
+        <input id="expenseDesc" type="text" placeholder="e.g. Dinner at Cafe Coral" required maxlength="80">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="expenseAmount">Amount</label>
+          <div class="amount-input">
+            <span id="expenseCurrencyPrefix">₹</span>
+            <input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="expenseCategory">Category</label>
+          <select id="expenseCategory">
+            <option value="general">🧾 General</option>
+            <option value="food">🍔 Food &amp; drink</option>
+            <option value="travel">🚕 Travel</option>
+            <option value="stay">🏨 Stay</option>
+            <option value="groceries">🛒 Groceries</option>
+            <option value="utilities">💡 Utilities</option>
+            <option value="fun">🎟️ Entertainment</option>
+            <option value="shopping">🛍️ Shopping</option>
+            <option value="other">📦 Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="expenseDate">Date</label>
+          <input id="expenseDate" type="date" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="expensePaidBy">Paid by</label>
+        <select id="expensePaidBy" required></select>
+      </div>
+
+      <div class="field">
+        <label>Split</label>
+        <div class="segmented" id="splitTypeToggle" role="tablist">
+          <button type="button" class="segmented__opt is-active" data-split="equal" role="tab">Equal</button>
+          <button type="button" class="segmented__opt" data-split="unequal" role="tab">Exact</button>
+          <button type="button" class="segmented__opt" data-split="percent" role="tab">Percent</button>
+          <button type="button" class="segmented__opt" data-split="shares" role="tab">Shares</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="split-header">
+          <label>Split between</label>
+          <span class="split-check" id="splitSumHint"></span>
+        </div>
+        <div id="splitMembers" class="split-members"><!-- injected --></div>
+      </div>
+
+      <p class="form__error" id="expenseFormError" role="alert"></p>
+
+      <div class="modal__actions">
+        <button type="button" class="btn btn--ghost" id="btnDeleteExpense" hidden>Delete</button>
+        <div class="modal__actions-right">
+          <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn--primary">Save expense</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: NEW GROUP ============ -->
+<div class="modal" id="modalGroup" role="dialog" aria-modal="true" aria-labelledby="modalGroupTitle">
+  <div class="modal__card">
+    <div class="modal__head">
+      <h2 id="modalGroupTitle">Create a group</h2>
+      <button class="iconbtn" data-close-modal aria-label="Close">✕</button>
+    </div>
+    <form id="formGroup" class="form">
+      <div class="field">
+        <label for="groupName">Group name</label>
+        <input id="groupName" type="text" placeholder="e.g. Goa Trip" required maxlength="40">
+      </div>
+      <div class="field">
+        <label for="groupIcon">Icon</label>
+        <select id="groupIcon">
+          <option value="🧳">🧳 Trip</option>
+          <option value="🏠">🏠 Home</option>
+          <option value="🍽️">🍽️ Food</option>
+          <option value="💼">💼 Work</option>
+          <option value="🎉">🎉 Event</option>
+          <option value="👥">👥 Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="split-header"><label>Members</label></div>
+        <div id="groupMembers" class="split-members"><!-- injected --></div>
+        <button type="button" class="link-btn" id="btnGroupNewPerson">+ Add a new person</button>
+      </div>
+      <p class="form__error" id="groupFormError" role="alert"></p>
+      <div class="modal__actions">
+        <div class="modal__actions-right">
+          <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn--primary">Create group</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: NEW PERSON ============ -->
+<div class="modal" id="modalPerson" role="dialog" aria-modal="true" aria-labelledby="modalPersonTitle">
+  <div class="modal__card modal__card--narrow">
+    <div class="modal__head">
+      <h2 id="modalPersonTitle">Add a person</h2>
+      <button class="iconbtn" data-close-modal aria-label="Close">✕</button>
+    </div>
+    <form id="formPerson" class="form">
+      <div class="field">
+        <label for="personName">Name</label>
+        <input id="personName" type="text" placeholder="e.g. Priya Sharma" required maxlength="40">
+      </div>
+      <p class="form__error" id="personFormError" role="alert"></p>
+      <div class="modal__actions">
+        <div class="modal__actions-right">
+          <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn--primary">Add person</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: SETTLE UP ============ -->
+<div class="modal" id="modalSettle" role="dialog" aria-modal="true" aria-labelledby="modalSettleTitle">
+  <div class="modal__card modal__card--narrow">
+    <div class="modal__head">
+      <h2 id="modalSettleTitle">Record a payment</h2>
+      <button class="iconbtn" data-close-modal aria-label="Close">✕</button>
+    </div>
+    <form id="formSettle" class="form">
+      <input type="hidden" id="settleGroupId">
+      <div class="row">
+        <div class="field">
+          <label for="settleFrom">From</label>
+          <select id="settleFrom" required></select>
+        </div>
+        <div class="field">
+          <label for="settleTo">To</label>
+          <select id="settleTo" required></select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="settleAmount">Amount</label>
+        <div class="amount-input">
+          <span id="settleCurrencyPrefix">₹</span>
+          <input id="settleAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+        </div>
+      </div>
+      <p class="form__error" id="settleFormError" role="alert"></p>
+      <div class="modal__actions">
+        <div class="modal__actions-right">
+          <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn--primary">Record payment</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/models.js"></script>
+<script src="js/balance.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
