@@ -240,5 +240,8 @@ input:focus,select:focus{ border-color:var(--brand); background:var(--bg-elevate
 }
 
 @media (prefers-reduced-motion: reduce){
-  *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  *{ 
+    animation-duration:.001ms !important; 
+    transition-duration:.001ms !important; 
+  }
 }
