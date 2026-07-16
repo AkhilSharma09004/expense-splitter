@@ -1,0 +1,120 @@
+/* =========================================================================
+   TALLY — design tokens
+   Concept: a shared ledger / paper receipt. Ink-teal on paper, mono figures
+   for money (tabular, exact), a warm rust for debts, forest green for credits.
+   ========================================================================= */
+:root{
+  --bg:            #F4F5F0;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #ECEEE7;
+  --ink-900:       #142522;
+  --ink-700:       #33453F;
+  --ink-500:       #5C6D66;
+  --ink-300:       #8B9C94;
+  --line:          #DDE1D8;
+  --line-strong:   #C7CDBF;
+
+  --brand:         #0F7C6C;
+  --brand-dark:    #0A5F52;
+  --brand-tint:    #E3F1EC;
+
+  --credit:        #1B8A5A;
+  --credit-tint:   #E4F3EA;
+  --debit:         #C1483A;
+  --debit-tint:    #FBEAE7;
+  --gold:          #B98A2E;
+  --gold-tint:     #F7EFDD;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 1px 2px rgba(20,37,34,0.06), 0 1px 1px rgba(20,37,34,0.04);
+  --shadow-md: 0 8px 24px rgba(20,37,34,0.10);
+  --shadow-lg: 0 20px 48px rgba(20,37,34,0.16);
+
+  --sidebar-w: 248px;
+  color-scheme: light;
+}
+
+[data-theme="dark"]{
+  --bg:            #0E1613;
+  --bg-elevated:   #162220;
+  --bg-sunken:     #0A100E;
+  --ink-900:       #EEF3EF;
+  --ink-700:       #C4D0C9;
+  --ink-500:       #8FA098;
+  --ink-300:       #5C6D66;
+  --line:          #263631;
+  --line-strong:   #33473F;
+  --brand-tint:    #12312B;
+  --credit-tint:   #12301F;
+  --debit-tint:    #33201C;
+  --gold-tint:     #362D16;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-lg: 0 20px 48px rgba(0,0,0,0.5);
+  color-scheme: dark;
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:0.25s ease, color .25s ease;
+}
+
+h1,h2,h3{ 
+  font-family: var(--font-display); 
+  font-weight:600; 
+  margin:0; 
+  color:var(--ink-900); 
+}
+
+p{ margin:0; }
+
+button{ 
+  font-family:inherit; 
+}
+
+input,select{ 
+  font-family: var(--font-body); 
+}
+
+::selection{ 
+  background: var(--brand); 
+  color:#fff; 
+}
+
+:focus-visible{ 
+  outline: 2px solid var(--brand); 
+  outline-offset: 2px; 
+}
+
+.mono{ 
+  font-family: var(--font-mono); 
+  font-variant-numeric: tabular-nums; 
+}
+
+/* =========================================================================
+   LAYOUT
+   ========================================================================= */
+.app{
+  display:grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height:100vh;
+}
+.main{ 
+  min-width:0; 
+  padding: 28px 36px 64px; 
+}
+
