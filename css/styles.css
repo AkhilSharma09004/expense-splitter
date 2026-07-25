@@ -115,19 +115,72 @@
 /* =========================================================================
    GRID / CARDS
    ========================================================================= */
-.grid{ display:grid; gap:18px; }
-.grid--2{ grid-template-columns: 1fr 1fr; }
-.grid--dash{ grid-template-columns: 1.1fr 0.9fr; align-items:start; }
-.card{ background:var(--bg-elevated); border:1px solid var(--line); border-radius: var(--radius-md); padding:20px; }
-.card__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-.card__title{ font-size:15px; font-weight:700; font-family:var(--font-display); }
-.card__link{ font-size:12.5px; color:var(--brand-dark); font-weight:700; background:none; border:none; cursor:pointer; }
+.grid{ 
+  display:grid; 
+  gap:18px; 
+}
+.grid--2{ 
+  grid-template-columns: 1fr 1fr; 
+}
+.grid--dash{ 
+  grid-template-columns: 1.1fr 0.9fr; 
+  align-items:start; 
+}
+.card{ 
+  background:var(--bg-elevated); 
+  border:1px solid var(--line); 
+  border-radius: var(--radius-md); 
+  padding:20px; 
+}
+.card__head{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  margin-bottom:14px; 
+}
+.card__title{ 
+  font-size:15px; 
+  font-weight:700; 
+  font-family:var(--font-display); 
+}
+.card__link{ 
+  font-size:12.5px; 
+  color:var(--brand-dark); 
+  font-weight:700;
+   background:none; 
+   border:none; 
+   cursor:pointer; 
+  }
 
-.person-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); }
-.person-row:last-child{ border-bottom:none; }
-.person-id{ display:flex; align-items:center; gap:10px; min-width:0; }
-.person-id span.txt{ font-weight:600; font-size:13.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.person-id .sub{ font-size:11.5px; color:var(--ink-300); font-weight:500; }
+.person-row{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0; 
+  border-bottom:1px solid var(--line); 
+}
+.person-row:last-child{ 
+  border-bottom:none; 
+}
+.person-id{ 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+  min-width:0; 
+}
+.person-id span.txt{ 
+  font-weight:600; 
+  font-size:13.5px; 
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+  white-space:nowrap; 
+}
+.person-id .sub{ 
+  font-size:11.5px; 
+  color:var(--ink-300); 
+  font-weight:500; 
+}
 .amt{ font-family:var(--font-mono); font-weight:600; font-size:13.5px; white-space:nowrap; }
 .amt.is-credit{ color:var(--credit); }
 .amt.is-debit{ color:var(--debit); }
