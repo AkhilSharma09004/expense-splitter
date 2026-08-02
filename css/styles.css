@@ -252,12 +252,40 @@
   box-shadow: var(--shadow-md); 
   transform: translateY(-1px); 
 }
-.group-card__icon{ font-size:24px; width:44px; height:44px; border-radius:12px; background:var(--bg-sunken); display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
-.group-card__name{ font-weight:700; font-size:15px; font-family:var(--font-display); margin-bottom:3px; }
-.group-card__meta{ font-size:12px; color:var(--ink-300); margin-bottom:14px; }
-.group-card__balance{ font-family:var(--font-mono); font-weight:600; font-size:16px; }
-.group-card__avatars{ display:flex; margin-top:12px; }
-.group-card__avatars .avatar{ margin-left:-8px; border:2px solid var(--bg-elevated); }
+.group-card__icon{ 
+  font-size:24px; 
+  width:44px; 
+  height:44px; 
+  border-radius:12px; 
+  background:var(--bg-sunken); 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  margin-bottom:12px; 
+}
+.group-card__name{ 
+  font-weight:700; 
+  font-size:15px; 
+  font-family:var(--font-display); 
+  margin-bottom:3px; 
+}
+.group-card__meta{ 
+  font-size:12px; 
+  color:var(--ink-300); 
+  margin-bottom:14px; 
+}
+.group-card__balance{ 
+  font-family:var(--font-mono); 
+  font-weight:600; font-size:16px; 
+}
+.group-card__avatars{ 
+  display:flex; 
+  margin-top:12px; 
+}
+.group-card__avatars .avatar{ 
+  margin-left:-8px; 
+  border:2px solid var(--bg-elevated); 
+}
 .group-card__avatars .avatar:first-child{ margin-left:0; }
 
 .tabs{ display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:20px; }
