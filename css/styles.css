@@ -440,16 +440,46 @@
 /* =========================================================================
    FORMS / MODALS
    ========================================================================= */
-.scrim{ position:fixed; inset:0; background:rgba(15,25,22,.45); -webkit-backdrop-filter: blur(2px);backdrop-filter: blur(2px); opacity:0; pointer-events:none; transition:opacity .18s ease; z-index:40; }
-.scrim.is-visible{ opacity:1; pointer-events:auto; }
-.modal{
-  position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
-  padding:20px; opacity:0; pointer-events:none; transition:opacity .18s ease;
+.scrim{ 
+  position:fixed; 
+  inset:0; 
+  background:rgba(15,25,22,.45); 
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px); 
+  opacity:0; 
+  pointer-events:none; 
+  transition:opacity .18s ease; z-index:40; 
 }
-.modal.is-open{ opacity:1; pointer-events:auto; }
+.scrim.is-visible{ 
+  opacity:1; 
+  pointer-events:auto; 
+}
+
+.modal{
+  position:fixed; 
+  inset:0; 
+  z-index:50; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center;
+  padding:20px; 
+  opacity:0; 
+  pointer-events:none; 
+  transition:opacity .18s ease;
+}
+.modal.is-open{ 
+  opacity:1; 
+  pointer-events:auto; 
+}
 .modal__card{
-  background:var(--bg-elevated); border-radius: var(--radius-lg); width:100%; max-width:480px;
-  max-height:88vh; overflow-y:auto; box-shadow: var(--shadow-lg); transform: translateY(8px) scale(.98);
+  background:var(--bg-elevated); 
+  border-radius: var(--radius-lg); 
+  width:100%; 
+  max-width:480px;
+  max-height:88vh; 
+  overflow-y:auto; 
+  box-shadow: var(--shadow-lg); 
+  transform: translateY(8px) scale(.98);
   transition: transform .18s ease;
 }
 .modal.is-open .modal__card{ transform:translateY(0) scale(1); }
