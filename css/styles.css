@@ -410,12 +410,32 @@
 /* =========================================================================
    SUGGESTED SETTLEMENTS
    ========================================================================= */
-.settle-list{ display:flex; flex-direction:column; gap:8px; }
-.settle-row{ display:flex; align-items:center; gap:10px; background:var(--bg-sunken); border-radius: var(--radius-sm); padding:10px 12px; font-size:13px; }
-.settle-row .arrow{ color:var(--ink-300); }
-.settle-row .who{ font-weight:700; }
-.settle-row .amt{ margin-left:auto; }
-.settle-row .btn{ margin-left:8px; }
+.settle-list{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:8px; 
+}
+.settle-row{ 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+  background:var(--bg-sunken); 
+  border-radius: var(--radius-sm); 
+  padding:10px 12px; 
+  font-size:13px; 
+}
+.settle-row .arrow{ 
+  color:var(--ink-300); 
+}
+.settle-row .who{ 
+  font-weight:700; 
+}
+.settle-row .amt{ 
+  margin-left:auto; 
+}
+.settle-row .btn{ 
+  margin-left:8px; 
+}
 
 /* =========================================================================
    FORMS / MODALS
