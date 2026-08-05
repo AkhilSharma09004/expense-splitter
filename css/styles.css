@@ -482,15 +482,41 @@
   transform: translateY(8px) scale(.98);
   transition: transform .18s ease;
 }
-.modal.is-open .modal__card{ transform:translateY(0) scale(1); }
-.modal__card--wide{ max-width:600px; }
-.modal__card--narrow{ max-width:380px; }
-.modal__head{ display:flex; align-items:center; justify-content:space-between; padding:20px 22px 6px; }
-.modal__head h2{ font-size:19px; }
+.modal.is-open .modal__card{ 
+  transform:translateY(0) scale(1); 
+}
+.modal__card--wide{ 
+  max-width:600px; 
+}
+.modal__card--narrow{ 
+  max-width:380px; 
+}
+.modal__head{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding:20px 22px 6px; 
+}
+.modal__head h2{ 
+  font-size:19px; 
+}
 
-.form{ padding:14px 22px 22px; display:flex; flex-direction:column; gap:14px; }
-.field{ display:flex; flex-direction:column; gap:6px; }
-.field label{ font-size:12px; font-weight:700; color:var(--ink-700); }
+.form{ 
+  padding:14px 22px 22px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:14px; 
+}
+.field{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:6px; 
+}
+.field label{ 
+  font-size:12px; 
+  font-weight:700; 
+  color:var(--ink-700); 
+}
 .row{ display:flex; gap:12px; }
 .row .field{ flex:1; }
 input[type=text],input[type=number],input[type=date],input[type=search],select{
