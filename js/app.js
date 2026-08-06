@@ -10,7 +10,11 @@
 let state = Store.load();
 
 // transient (not persisted) UI state for the expense form's split editor
-let splitDraft = { type: 'equal', checked: new Set(), values: {} };
+let splitDraft = { 
+  type: 'equal', 
+  checked: new Set(), 
+  values: {} 
+};
 let editingExpenseId = null;
 let pendingGroupModalMode = 'create'; // 'create' | 'edit'
 let editingGroupId = null;
@@ -49,9 +53,12 @@ function render() {
     const cls = bal > 0.005 ? 'is-credit' : bal < -0.005 ? 'is-debit' : '';
     const active = state.view === 'group' && state.activeGroupId === g.id ? 'is-active' : '';
     return `<button class="sidebar__groupitem ${active}" data-open-group="${g.id}">
+
       <span class="grp-name">${g.icon} ${escapeHTML(g.name)}</span>
+
       <span class="grp-balance amt ${cls}">${bal === 0 ? '' : fmtMoney(state, Math.abs(bal))}</span>
     </button>`;
+
   }).join('') || `<div class="empty__sub" style="padding:4px 10px;">No groups yet</div>`;
 
   const titleEl = $('#pageTitle'), subEl = $('#pageSubtitle'), rootEl = $('#viewRoot');
@@ -61,20 +68,24 @@ function render() {
     titleEl.textContent = 'Dashboard';
     subEl.textContent = 'Your overall balance across every group';
     rootEl.innerHTML = renderDashboard(state);
-  } else if (state.view === 'groups') {
+  } 
+  else if (state.view === 'groups') {
     titleEl.textContent = 'Groups';
     subEl.textContent = `${state.groups.length} group${state.groups.length===1?'':'s'} · tap one to see the ledger`;
     rootEl.innerHTML = renderGroups(state);
-  } else if (state.view === 'group') {
+  } 
+  else if (state.view === 'group') {
     const g = state.groups.find((x) => x.id === state.activeGroupId);
     titleEl.textContent = g ? `${g.icon} ${g.name}` : 'Group';
     subEl.textContent = g ? `${g.memberIds.length} members` : '';
     rootEl.innerHTML = renderGroupDetail(state, state.activeGroupId);
-  } else if (state.view === 'people') {
+  } 
+  else if (state.view === 'people') {
     titleEl.textContent = 'People';
     subEl.textContent = `Everyone you've split an expense with`;
     rootEl.innerHTML = renderPeople(state);
-  } else if (state.view === 'activity') {
+  } 
+  else if (state.view === 'activity') {
     titleEl.textContent = 'Activity';
     subEl.textContent = 'Every expense and payment, newest first';
     rootEl.innerHTML = renderActivity(state, $('#searchInput').value);
@@ -103,7 +114,10 @@ function closeModal(id) {
   const anyOpen = $$('.modal.is-open').length > 0;
   if (!anyOpen) $('#scrim').classList.remove('is-visible');
 }
-function closeAllModals() { $$('.modal').forEach((m) => m.classList.remove('is-open')); $('#scrim').classList.remove('is-visible'); }
+function closeAllModals() { 
+  $$('.modal').forEach((m) => m.classList.remove('is-open')); 
+  $('#scrim').classList.remove('is-visible'); 
+}
 
 /* =========================================================================
    EXPENSE MODAL
@@ -151,7 +165,8 @@ function openExpenseModal({ groupId = null, expenseId = null } = {}) {
     if (type !== 'equal') expense.splits.forEach((s) => {
       splitDraft.values[s.personId] = type === 'percent' ? round2((s.amount / expense.amount) * 100) : (type === 'shares' ? s.amount : s.amount);
     });
-  } else {
+  } 
+  else {
     splitDraft.checked = new Set(allPeopleForGroup(initialGroupId).map((p) => p.id));
     splitDraft.values = {};
   }
@@ -185,7 +200,8 @@ function paintSplitMembers() {
       const checkedIds = people.map((x) => x.id).filter((id) => splitDraft.checked.has(id));
       const share = checked && checkedIds.length ? splitEqual(amount, checkedIds).find((s) => s.personId === p.id)?.amount : 0;
       valueField = `<span class="split-value mono" style="text-align:right; color:var(--ink-500); font-size:12.5px;">${checked ? fmtMoney(state, share || 0) : ''}</span>`;
-    } else {
+    } 
+    else {
       const val = splitDraft.values[p.id] ?? '';
       const unit = type === 'percent' ? '%' : type === 'shares' ? '×' : '';
       valueField = `<span class="split-value"><input type="number" min="0" step="0.01" data-split-input="${p.id}" value="${val}" ${checked ? '' : 'disabled'} placeholder="0"></span><span class="unit">${unit}</span>`;
